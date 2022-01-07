@@ -14,6 +14,7 @@ require('./light');
 require('./line');
 require('./link');
 require('./look-controls');
+require('./look-controls-horizontal');
 require('./magicleap-controls');
 require('./material');
 require('./obj-model');
