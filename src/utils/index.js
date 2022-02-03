@@ -250,7 +250,7 @@ module.exports.diff = (function () {
  */
 module.exports.shouldCaptureKeyEvent = function (event) {
   if (event.metaKey) { return false; }
-  return document.activeElement === document.body;
+  return true;
 };
 
 /**

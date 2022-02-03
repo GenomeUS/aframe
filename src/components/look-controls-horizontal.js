@@ -1,4 +1,3 @@
-/* global DeviceOrientationEvent  */
 var registerComponent = require('../core/component').registerComponent;
 var THREE = require('../lib/three');
 var utils = require('../utils/');
@@ -36,8 +35,6 @@ module.exports.Component = registerComponent('look-controls-horizontal', {
     this.bindMethods();
     this.previousMouseEvent = {};
 
-    this.setupMagicWindowControls();
-
     // To save / restore camera pose
     this.savedPose = {
       position: new THREE.Vector3(),
@@ -46,26 +43,6 @@ module.exports.Component = registerComponent('look-controls-horizontal', {
 
     // Call enter VR handler if the scene has entered VR before the event listeners attached.
     if (this.el.sceneEl.is('vr-mode')) { this.onEnterVR(); }
-  },
-
-  setupMagicWindowControls: function () {
-    var magicWindowControls;
-    var data = this.data;
-
-    // Only on mobile devices and only enabled if DeviceOrientation permission has been granted.
-    if (utils.device.isMobile()) {
-      magicWindowControls = this.magicWindowControls = new THREE.DeviceOrientationControls(this.magicWindowObject);
-      if (typeof DeviceOrientationEvent !== 'undefined' && DeviceOrientationEvent.requestPermission) {
-        magicWindowControls.enabled = false;
-        if (this.el.sceneEl.components['device-orientation-permission-ui'].permissionGranted) {
-          magicWindowControls.enabled = data.magicWindowTrackingEnabled;
-        } else {
-          this.el.sceneEl.addEventListener('deviceorientationpermissiongranted', function () {
-            magicWindowControls.enabled = data.magicWindowTrackingEnabled;
-          });
-        }
-      }
-    }
   },
 
   update: function (oldData) {

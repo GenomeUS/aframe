@@ -58577,7 +58577,6 @@ module.exports.Component = registerComponent('look-controls-horizontal', {
     this.bindMethods();
     this.previousMouseEvent = {};
 
-    this.setupMagicWindowControls();
 
     // To save / restore camera pose
     this.savedPose = {
@@ -58589,25 +58588,6 @@ module.exports.Component = registerComponent('look-controls-horizontal', {
     if (this.el.sceneEl.is('vr-mode')) { this.onEnterVR(); }
   },
 
-  setupMagicWindowControls: function () {
-    var magicWindowControls;
-    var data = this.data;
-
-    // Only on mobile devices and only enabled if DeviceOrientation permission has been granted.
-    if (utils.device.isMobile()) {
-      magicWindowControls = this.magicWindowControls = new THREE.DeviceOrientationControls(this.magicWindowObject);
-      if (typeof DeviceOrientationEvent !== 'undefined' && DeviceOrientationEvent.requestPermission) {
-        magicWindowControls.enabled = false;
-        if (this.el.sceneEl.components['device-orientation-permission-ui'].permissionGranted) {
-          magicWindowControls.enabled = data.magicWindowTrackingEnabled;
-        } else {
-          this.el.sceneEl.addEventListener('deviceorientationpermissiongranted', function () {
-            magicWindowControls.enabled = data.magicWindowTrackingEnabled;
-          });
-        }
-      }
-    }
-  },
 
   update: function (oldData) {
     var data = this.data;
@@ -70873,7 +70853,7 @@ _dereq_('./core/a-mixin');
 _dereq_('./extras/components/');
 _dereq_('./extras/primitives/');
 
-console.log('A-Frame Version: 1.1.0 (Date 2022-01-07, Commit #d21570b4)');
+console.log('A-Frame Version: 1.1.0 (Date 2022-02-03, Commit #fa5bdc2c)');
 console.log('THREE Version (https://github.com/supermedium/three.js):',
             pkg.dependencies['super-three']);
 console.log('WebVR Polyfill Version:', pkg.dependencies['webvr-polyfill']);
@@ -73588,7 +73568,7 @@ module.exports.diff = (function () {
  */
 module.exports.shouldCaptureKeyEvent = function (event) {
   if (event.metaKey) { return false; }
-  return document.activeElement === document.body;
+  return true;
 };
 
 /**
